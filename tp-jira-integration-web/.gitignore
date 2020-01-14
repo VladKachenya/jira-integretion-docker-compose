@@ -1,0 +1,6 @@
+node_modules
+dist
+web/node_modules
+web/index.html
+web/bundle.js
+.cache

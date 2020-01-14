@@ -1,0 +1,36 @@
+# docker-compose.yml
+version: "3"
+services:
+  ui:
+    build: ./tp-jira-integration-web
+    container_name: jira-integration-web
+    depends_on:
+      - app
+    ports:
+      - 8080:8080
+
+  app:
+    build: ./tp-jira-integration-api
+    container_name: jira-integration-api
+    depends_on:
+      - db
+    environment:
+      TYPEORM_CONNECTION: postgres
+      TYPEORM_PASSWORD: postgres
+      TYPEORM_USERNAME: postgres
+      TYPEORM_HOST: db
+      TYPEORM_DATABASE: postgres
+      TYPEORM_PORT: 5432
+      NODE_ENV: development
+      PORT: 3000
+    ports:
+      - "3000:3000"
+  
+  db:
+    image: postgres:12.1
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
